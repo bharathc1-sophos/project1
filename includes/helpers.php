@@ -24,7 +24,7 @@ function query($query,$connection){
 }
 
 function apologize($msg){
-	render("apology.php",$msg);
+	render("apology.php",["msg"=>$msg]);
 	
 }
 function render($view,$values=[]){
