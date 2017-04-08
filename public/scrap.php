@@ -18,17 +18,34 @@ else{
 		$cxContext = stream_context_create($aContext);
 
 		$source=file_get_contents($_POST[link], False, $cxContext);
-		if(preg_match_all('@<a class="[^"]+">\s*(.+)\s*</a>@',$source,$matches)){
+		
+		if(preg_match_all('@<h2 class="tuple-clg-heading"><a href="[^"]+" target="_blank">\s*(.+)@',$source,$matches)){
 			
-			//$k=preg_match_all('@<h2 class="tuple-clg-heading"><a href="(.+)" target="_blank">@',$source,$address);
+			preg_match_all('@<h2 class="tuple-clg-heading"><a href="(.+)" target="_blank">@',$source,$links);
 			
-				for($i=0;$i<count($matches[1]);$i++){
-					//preg_match('@\|\s*(.+)@',$address[1][$i],$add);
-					echo $matches[1][$i].'<br>' ;
-				}
-				//echo $address[1][0].'<br>' ;
-				//var_dump($address[1][0]);
-				//var_dump($matches[0]);
+			
+			
+				for($i=0;$i<3;$i++){
+				
+					$clg=file_get_contents($links[1][$i],False,$cxContext);
+					if(preg_match_all('@<a class="[^"]+">\s*(.+)\s*</a>@',$clg,$facilities)){
+					
+						preg_match_all('@<span class="location-of-clg">, (.+)</span></h1>@',$clg,$address);
+						
+						echo $matches[1][$i].'--->'.$address[1][0].'<br>';
+						
+						preg_match_all('@Showing [\d*] of (\d+) reviews@',$clg,$review);
+						for($j=0;$j<count($facilities[1]);$j++){
+							//preg_match('@\|\s*(.+)@',$address[1][$i],$add);
+							echo $facilities[1][$j].'    ' ;
+						}
+						echo '<br>no of reviews'.$review[1][0].'<br>';			
+					
+					
+					}
+					sleep(2);
+				}	
+				
 			
 		}
 		else{
@@ -42,5 +59,6 @@ else{
 		$msg="you must provide the link";
 		apologize($msg);
 	}
+
 }
 ?>
