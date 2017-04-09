@@ -20,25 +20,40 @@ if($_SERVER["REQUEST_METHOD"]==="GET"){
 			
 			
 			
-				for($i=0;$i<3;$i++){
+				for($i=0;$i<count($matches[1]);$i++){
 				
 					$clg=file_get_contents($links[1][$i],False,$cxContext);
 					if(preg_match_all('@<a class="[^"]+">\s*(.+)\s*</a>@',$clg,$facilities)){
 					
 						preg_match_all('@<span class="location-of-clg">, (.+)</span></h1>@',$clg,$address);
 						
-						$data=$data.$matches[1][$i].'--->'.$address[1][0].'<br>';
+						$data=$data.$matches[1][$i].'--->'.$address[0][0].'<br>';
 						
 						preg_match_all('@Showing [\d*] of (\d+) reviews@',$clg,$review);
+						$fac='';
 						for($j=0;$j<count($facilities[1]);$j++){
-							//preg_match('@\|\s*(.+)@',$address[1][$i],$add);
-							$data = $data.$facilities[1][$j].'    ' ;
+							$fac = $fac.$facilities[1][$j].'   ' ;
 						}
-						$data = $data.'<br>no of reviews'.$review[1][0].'<br>';			
-					
-					
+						$data = $data.$fac;
+						/*$connect=database_connect();
+						
+						//$query="INSERT INTO `colleges` (`college`, `addresss`, `facilities`, `reviews`) VALUES ('".$matches[1][$i]."','".$address[1][0]."','".$fac."','".$reviews[1][0]."');";
+						
+						$add=$address[1][0];
+						$college=$matches[1][$i];
+						$reviews=$review[1][0];
+						$query="INSERT INTO `colleges` (`college`, `addresss`, `facilities`, `reviews`) VALUES ('$college','$add','sfaf','$reviews');";
+						$stat=query($connect,$query);*/
+						
+						
+						if(preg_match_all('@Showing [\d*] of (\d+) reviews@',$clg,$review))
+							$data = $data.'<br>no of reviews '.$review[1][0].'<br>';
+							
+						else
+							$data = $data.'<br>no of reviews 0 <br>';
+						
 					}
-					sleep(2);
+					sleep(1);
 				}	
 				
 			

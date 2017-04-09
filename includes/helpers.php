@@ -16,11 +16,10 @@ function database_connect()
 	return $connect;
 }
 
-function query($query,$connection){
-	
-	$stat=mysqli_query($connection,$string);
-	
-	return $stat;
+function query($conn, $query)
+{
+	$result = mysqli_query($conn, $query);
+	return $result;
 }
 
 function apologize($msg){
