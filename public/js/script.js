@@ -14,7 +14,7 @@ function scrape(){
 		}
 		else
 		{
-			var loader="<img id=\"loading\" src=\"img/loader.gif\" alt=\"Loadingde...\" />" ;
+			var loader="<div style=\" text-align:center;\"><img id=\"loading\" src=\"img/loader.gif\" alt=\"Loadingde...\" ></div>" ;
 			document.getElementById('show').innerHTML = loader;
 			var content=data;
 			document.getElementById('show').innerHTML = content;
